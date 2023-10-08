@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StandingBackProject.Data.Entities
+﻿namespace StandingBackProject.Data.Entities
 {
     public class Team
     {
@@ -13,7 +7,6 @@ namespace StandingBackProject.Data.Entities
         public bool isDeleted { get; set; }
         public virtual ICollection<Person> Persons  { get; set; }
         public virtual ICollection<ResultTournamentTeam> ResultTournamentTeams { get; set; }
-        public virtual ICollection<TeamTournamentsHistory> TeamTournamentsHistories { get; set; }
 
     }
 }

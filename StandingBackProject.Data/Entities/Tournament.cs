@@ -1,9 +1,4 @@
 ﻿using StandingBackProject.Data.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StandingBackProject.Data.Entities
 {
@@ -18,8 +13,6 @@ namespace StandingBackProject.Data.Entities
         public virtual Game Game { get; set; }
         public virtual ICollection<ResultTournamentPlayer> ResultTournamentPlayers { get; set; }
         public virtual ICollection<ResultTournamentTeam> ResultTournamentTeams { get; set; }
-        public virtual ICollection<PlayerTournamentsHistory> PlayerTournamentsHistories { get; set; }
-        public virtual ICollection<TeamTournamentsHistory> TeamTournamentsHistories { get; set; }
 
     }
 }
