@@ -1,9 +1,9 @@
 ﻿using StandingBackProject.Data.Entities;
-
+using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Data.Repositories
 {
-    public class PersonRepository
+    public class PersonRepository : IPersonRepository
     {
         private readonly StandingContext _context;
 
@@ -24,7 +24,7 @@ namespace StandingBackProject.Data.Repositories
             oldPerson.Name = newPerson.Name;
             oldPerson.Nickname = newPerson.Nickname;
             oldPerson.Tournaments = newPerson.Tournaments;
-            oldPerson.Team = newPerson.Team;            
+            oldPerson.Team = newPerson.Team;
 
             _context.SaveChanges();
         }

@@ -1,15 +1,16 @@
 ﻿using StandingBackProject.Data.Entities;
+using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Data.Repositories
 {
-    public class TeamRepository
+    public class TeamRepository : ITeamRepository
     {
         private readonly StandingContext _context;
 
         public List<Team> GetTeams(bool includeAll = false) => _context.Team.Where(t => !t.isDeleted || includeAll).ToList();
 
         public Team? GetById(int id) => _context.Team.FirstOrDefault(x => x.Id == id);
-                
+
         public int Add(Team team)
         {
             _context.Team.Add(team);
@@ -18,7 +19,7 @@ namespace StandingBackProject.Data.Repositories
         }
         public void Update(Team oldTeam, Team newTeam)
         {
-            oldTeam.Name = newTeam.Name;            
+            oldTeam.Name = newTeam.Name;
 
             _context.SaveChanges();
         }

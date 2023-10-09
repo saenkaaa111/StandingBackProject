@@ -1,8 +1,9 @@
 ﻿using StandingBackProject.Data.Entities;
+using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Data.Repositories
 {
-    public class ResultTournamentPlayerRepository
+    public class ResultTournamentPlayerRepository : IResultTournamentPlayerRepository
     {
         private readonly StandingContext _context;
 
@@ -11,7 +12,7 @@ namespace StandingBackProject.Data.Repositories
         public ResultTournamentPlayer? GetById(int id) => _context.ResultTournamentPlayer.FirstOrDefault(x => x.Id == id);
         public List<ResultTournamentPlayer> GetByGame(Game game) => _context.ResultTournamentPlayer.Where(x => x.Game == game).ToList();
         public List<ResultTournamentPlayer> GetByPerson(Person person) => _context.ResultTournamentPlayer.Where(x => x.Person == person).ToList();
-         
+
         public int Add(ResultTournamentPlayer resultTournamentPlayer)
         {
             _context.ResultTournamentPlayer.Add(resultTournamentPlayer);
@@ -20,8 +21,8 @@ namespace StandingBackProject.Data.Repositories
         }
         public void Update(ResultTournamentPlayer oldResultTournamentPlayer, ResultTournamentPlayer newResultTournamentPlayer)
         {
-            oldResultTournamentPlayer.Result  = newResultTournamentPlayer.Result;
-            oldResultTournamentPlayer.Game = newResultTournamentPlayer.Game; 
+            oldResultTournamentPlayer.Result = newResultTournamentPlayer.Result;
+            oldResultTournamentPlayer.Game = newResultTournamentPlayer.Game;
             oldResultTournamentPlayer.Person = newResultTournamentPlayer.Person;
             oldResultTournamentPlayer.Tournament = newResultTournamentPlayer.Tournament;
 

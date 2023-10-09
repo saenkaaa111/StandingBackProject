@@ -1,8 +1,9 @@
 ﻿using StandingBackProject.Data.Entities;
+using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Data.Repositories
 {
-    public class ResultTournamentTeamRepository
+    public class ResultTournamentTeamRepository : IResultTournamentTeamRepository
     {
         private readonly StandingContext _context;
 
