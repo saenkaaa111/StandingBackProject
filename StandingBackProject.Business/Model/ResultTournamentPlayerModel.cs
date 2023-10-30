@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StandingBackProject.Business.Model
+﻿namespace StandingBackProject.Business.Model
 {
     public class ResultTournamentPlayerModel
     {
+        public int Id { get; set; }
+        public string Result { get; set; }
+        public PersonModel Person { get; set; }
+        public TournamentModel Tournament { get; set; }
+        public GameModel Game { get; set; }
+        public bool isDeleted { get; set; }
     }
 }

@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
+using StandingBackProject.Business.Exceptions;
 using StandingBackProject.Business.Model;
 using StandingBackProject.Data.Entities;
 using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Business.Services
 {
-    public class ClubService 
+    public class ClubService : IClubService
     {
         private readonly IClubRepository _repository;
-        private readonly IMapper _mapper;   
+        private readonly IMapper _mapper;
 
         public ClubService(IClubRepository repository, IMapper mapper)
         {
@@ -63,7 +64,7 @@ namespace StandingBackProject.Business.Services
         private static void ThrowIfEntityNotFound<T>(T? entity, int id)
         {
             if (entity is null)
-                throw new Exception();
+                throw new NotFoundException(typeof(T).Name, id);
         }
 
     }

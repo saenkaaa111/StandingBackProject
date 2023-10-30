@@ -8,7 +8,7 @@ namespace StandingBackProject.Data.Repositories
         List<ResultTournamentPlayer> GetByGame(Game game);
         ResultTournamentPlayer? GetById(int id);
         List<ResultTournamentPlayer> GetByPerson(Person person);
-        List<ResultTournamentPlayer> GetResultTournamentPlayers();
+        List<ResultTournamentPlayer> GetResultTournamentPlayers(bool includeAll);
         void Update(ResultTournamentPlayer resultTournamentPlayer, bool isDeleted);
         void Update(ResultTournamentPlayer oldResultTournamentPlayer, ResultTournamentPlayer newResultTournamentPlayer);
     }

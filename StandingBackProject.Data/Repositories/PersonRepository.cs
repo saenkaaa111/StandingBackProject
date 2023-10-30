@@ -1,4 +1,5 @@
-﻿using StandingBackProject.Data.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using StandingBackProject.Data.Entities;
 using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Data.Repositories
@@ -7,12 +8,22 @@ namespace StandingBackProject.Data.Repositories
     {
         private readonly StandingContext _context;
 
-        public List<Person> GetPersons(bool includeAll = false) => _context.Person.Where(t => !t.isDeleted || includeAll).ToList();
+        public PersonRepository(StandingContext context)
+        {
+            _context = context;
+        }
 
-        public Person? GetById(int id) => _context.Person.FirstOrDefault(x => x.Id == id);
+        public List<Person> GetPersons(bool includeAll = false)
+        {
+            var ttt = _context.Person.Where(t => !t.isDeleted || includeAll).ToList();
+            return ttt;
+        }
+
+        public Person? GetById(int id) => _context.Person
+                                                .FirstOrDefault(x => x.Id == id);
 
         public Person? GetByNickname(string nickname) => _context.Person.FirstOrDefault(x => x.Nickname == nickname);
-
+        
         public int Add(Person person)
         {
             _context.Person.Add(person);
@@ -23,9 +34,7 @@ namespace StandingBackProject.Data.Repositories
         {
             oldPerson.Name = newPerson.Name;
             oldPerson.Nickname = newPerson.Nickname;
-            oldPerson.Tournaments = newPerson.Tournaments;
-            oldPerson.Team = newPerson.Team;
-
+            
             _context.SaveChanges();
         }
 

@@ -17,7 +17,7 @@ namespace StandingBackProject.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -58,6 +58,12 @@ namespace StandingBackProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("DateFinish")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -89,15 +95,10 @@ namespace StandingBackProject.Data.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Person");
                 });
@@ -137,61 +138,6 @@ namespace StandingBackProject.Data.Migrations
                     b.ToTable("ResultTournamentPlayer");
                 });
 
-            modelBuilder.Entity("StandingBackProject.Data.Entities.ResultTournamentTeam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Result")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TournamentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("TeamId");
-
-                    b.HasIndex("TournamentId");
-
-                    b.ToTable("ResultTournamentTeam");
-                });
-
-            modelBuilder.Entity("StandingBackProject.Data.Entities.Team", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Team");
-                });
-
             modelBuilder.Entity("StandingBackProject.Data.Entities.Tournament", b =>
                 {
                     b.Property<int>("Id")
@@ -209,7 +155,7 @@ namespace StandingBackProject.Data.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JudgeId")
+                    b.Property<int?>("JudgeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -228,17 +174,6 @@ namespace StandingBackProject.Data.Migrations
                     b.HasIndex("JudgeId");
 
                     b.ToTable("Tournament");
-                });
-
-            modelBuilder.Entity("StandingBackProject.Data.Entities.Person", b =>
-                {
-                    b.HasOne("StandingBackProject.Data.Entities.Team", "Team")
-                        .WithMany("Persons")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Team");
                 });
 
             modelBuilder.Entity("StandingBackProject.Data.Entities.ResultTournamentPlayer", b =>
@@ -268,33 +203,6 @@ namespace StandingBackProject.Data.Migrations
                     b.Navigation("Tournament");
                 });
 
-            modelBuilder.Entity("StandingBackProject.Data.Entities.ResultTournamentTeam", b =>
-                {
-                    b.HasOne("StandingBackProject.Data.Entities.Game", "Game")
-                        .WithMany("ResultTournamentTeams")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("StandingBackProject.Data.Entities.Team", "Team")
-                        .WithMany("ResultTournamentTeams")
-                        .HasForeignKey("TeamId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("StandingBackProject.Data.Entities.Tournament", "Tournament")
-                        .WithMany("ResultTournamentTeams")
-                        .HasForeignKey("TournamentId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Game");
-
-                    b.Navigation("Team");
-
-                    b.Navigation("Tournament");
-                });
-
             modelBuilder.Entity("StandingBackProject.Data.Entities.Tournament", b =>
                 {
                     b.HasOne("StandingBackProject.Data.Entities.Club", "Club")
@@ -312,8 +220,7 @@ namespace StandingBackProject.Data.Migrations
                     b.HasOne("StandingBackProject.Data.Entities.Person", "Judge")
                         .WithMany("Tournaments")
                         .HasForeignKey("JudgeId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Club");
 
@@ -331,8 +238,6 @@ namespace StandingBackProject.Data.Migrations
                 {
                     b.Navigation("ResultTournamentPlayers");
 
-                    b.Navigation("ResultTournamentTeams");
-
                     b.Navigation("Tournaments");
                 });
 
@@ -343,18 +248,9 @@ namespace StandingBackProject.Data.Migrations
                     b.Navigation("Tournaments");
                 });
 
-            modelBuilder.Entity("StandingBackProject.Data.Entities.Team", b =>
-                {
-                    b.Navigation("Persons");
-
-                    b.Navigation("ResultTournamentTeams");
-                });
-
             modelBuilder.Entity("StandingBackProject.Data.Entities.Tournament", b =>
                 {
                     b.Navigation("ResultTournamentPlayers");
-
-                    b.Navigation("ResultTournamentTeams");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,10 +9,9 @@ namespace StandingBackProject.Data.Entities
         public DateTime Date { get; set; }
         public Status Status { get; set; }
         public virtual Club Club { get; set; }
-        public virtual Person Judge { get; set; } //судья
+        public virtual Person? Judge { get; set; } //судья
         public virtual Game Game { get; set; }
         public virtual ICollection<ResultTournamentPlayer> ResultTournamentPlayers { get; set; }
-        public virtual ICollection<ResultTournamentTeam> ResultTournamentTeams { get; set; }
 
     }
 }

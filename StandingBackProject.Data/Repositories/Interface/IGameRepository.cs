@@ -6,6 +6,7 @@ namespace StandingBackProject.Data.Repositories
     {
         int Add(Game game);
         Game? GetById(int id);
+        Game? GetByTournament(Tournament tournament);
         List<Game> GetGames(bool includeAll = false);
         void Update(Game game, bool isDeleted);
         void Update(Game oldGame, Game newGame);

@@ -5,7 +5,7 @@ using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Business.Services
 {
-    public class PersonService
+    public class PersonService : IPersonService
     {
         private readonly IPersonRepository _repository;
         private readonly IMapper _mapper;
@@ -35,7 +35,6 @@ namespace StandingBackProject.Business.Services
             return _mapper.Map<List<PersonModel>>(entities);
 
         }
-
 
         public int Add(PersonModel entity)
         {

@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
+using StandingBackProject.Business.Exceptions;
 using StandingBackProject.Business.Model;
 using StandingBackProject.Data.Entities;
 using StandingBackProject.Data.Repositories;
 
 namespace StandingBackProject.Business.Services
 {
-    public class GameService
+    public class GameService : IGameService
     {
         private readonly IGameRepository _repository;
         private readonly IMapper _mapper;
@@ -40,6 +41,8 @@ namespace StandingBackProject.Business.Services
         public int Add(GameModel entity)
         {
             var addEntity = _mapper.Map<Game>(entity);
+            CheckDate(addEntity.DateStart, addEntity.DateFinish);
+                
             var id = _repository.Add(addEntity);
             return id;
         }
@@ -49,6 +52,7 @@ namespace StandingBackProject.Business.Services
             var gameOld = _repository.GetById(id);
             ThrowIfEntityNotFound(gameOld, id);
             var gameNew = _mapper.Map<Game>(entity);
+            CheckDate(gameNew.DateStart, gameNew.DateFinish);
             _repository.Update(gameOld, gameNew);
 
         }
@@ -60,10 +64,19 @@ namespace StandingBackProject.Business.Services
             _repository.Update(entity, isDeleted);
 
         }
+
+        protected static void CheckDate(DateTime dateStart, DateTime dateFinish)
+        {
+            if (dateStart > dateFinish)
+            {
+                throw new InvalidDataException("The start date of the game cannot be later than the end date");
+            }
+        }
+
         private static void ThrowIfEntityNotFound<T>(T? entity, int id)
         {
             if (entity is null)
-                throw new Exception();
+                throw new NotFoundException(typeof(T).Name, id);
         }
 
     }
